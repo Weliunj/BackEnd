@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "BackEnd.Controllers.gam106Controller",
+    "Method": "GetAllAccount",
+    "RelativePath": "api/gam106",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
