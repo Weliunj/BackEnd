@@ -1,12 +1,1 @@
-[
-  {
-    "ContainingType": "BackEnd.Controllers.MinecraftController",
-    "Method": "GetAllAccounts",
-    "RelativePath": "api/Minecraft",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  }
-]
+[]

@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/[controller]")]     //attribute định nghĩa URL      /api/Minecraft
+    [ApiController]     //Code sạch, an toàn
     public class MinecraftController : Controller
     {
         MinecraftContext _minecraftContext;
@@ -14,7 +14,7 @@ namespace BackEnd.Controllers
             _minecraftContext = context;
         }
         [HttpGet]       //Phương thức đọc dữ liệu
-        public async Task<IActionResult> GetAllAccounts()
+        public async Task<IActionResult> GetAllAccounts()       //async: Hàm chạy bất đồng bộ
         {
             try
             {
