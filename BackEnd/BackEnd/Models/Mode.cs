@@ -5,7 +5,7 @@ namespace BackEnd.Models;
 
 public partial class Mode
 {
-    public int Mid { get; set; }
+    public int MId { get; set; }
 
     public string MName { get; set; } = null!;
 

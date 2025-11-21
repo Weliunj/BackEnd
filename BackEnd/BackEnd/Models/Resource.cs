@@ -5,13 +5,13 @@ namespace BackEnd.Models;
 
 public partial class Resource
 {
-    public int Rid { get; set; }
+    public int RId { get; set; }
 
-    public int? Rquan { get; set; }
+    public string RName { get; set; } = null!;
 
-    public string Rtype { get; set; } = null!;
+    public string? RImg { get; set; }
 
-    public int Pid { get; set; }
+    public virtual ICollection<PlayResource> PlayResources { get; set; } = new List<PlayResource>();
 
-    public virtual ICollection<Recipedetail> Recipedetails { get; set; } = new List<Recipedetail>();
+    public virtual ICollection<RecipeDetail> RecipeDetails { get; set; } = new List<RecipeDetail>();
 }

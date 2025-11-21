@@ -5,7 +5,7 @@ namespace BackEnd.Models;
 
 public partial class Account
 {
-    public int Uid { get; set; }
+    public int UId { get; set; }
 
     public string Email { get; set; } = null!;
 

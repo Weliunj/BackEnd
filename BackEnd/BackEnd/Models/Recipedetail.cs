@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace BackEnd.Models;
 
-public partial class Recipedetail
+public partial class RecipeDetail
 {
-    public int Rdid { get; set; }
+    public int RcldId { get; set; }
 
-    public int? Rdquan { get; set; }
+    public int RId { get; set; }
 
-    public int Rid { get; set; }
+    public int RcId { get; set; }
 
-    public int Reid { get; set; }
+    public int? Quantity { get; set; }
 
-    public virtual Resource Re { get; set; } = null!;
+    public virtual Resource RIdNavigation { get; set; } = null!;
 
-    public virtual Recipe RidNavigation { get; set; } = null!;
+    public virtual Recipe Rc { get; set; } = null!;
 }

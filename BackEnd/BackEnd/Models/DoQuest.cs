@@ -5,17 +5,17 @@ namespace BackEnd.Models;
 
 public partial class DoQuest
 {
-    public int Dqid { get; set; }
+    public int DqId { get; set; }
 
     public bool? Status { get; set; }
 
-    public DateOnly Time { get; set; }
+    public DateOnly? Time { get; set; }
 
-    public int Pid { get; set; }
+    public int QId { get; set; }
 
-    public int Qid { get; set; }
+    public int PId { get; set; }
 
-    public virtual Play PidNavigation { get; set; } = null!;
+    public virtual Play PIdNavigation { get; set; } = null!;
 
-    public virtual Quest QidNavigation { get; set; } = null!;
+    public virtual Quest QIdNavigation { get; set; } = null!;
 }

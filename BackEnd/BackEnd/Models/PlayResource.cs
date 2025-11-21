@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace BackEnd.Models;
 
-public partial class Inventory
+public partial class PlayResource
 {
-    public int InId { get; set; }
+    public int PrId { get; set; }
 
     public int PId { get; set; }
 
-    public int IId { get; set; }
+    public int RId { get; set; }
 
     public int? Quantity { get; set; }
 
-    public virtual Item IIdNavigation { get; set; } = null!;
-
     public virtual Play PIdNavigation { get; set; } = null!;
+
+    public virtual Resource RIdNavigation { get; set; } = null!;
 }

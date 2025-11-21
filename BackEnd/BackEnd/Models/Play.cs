@@ -5,21 +5,21 @@ namespace BackEnd.Models;
 
 public partial class Play
 {
-    public int Pid { get; set; }
+    public int PId { get; set; }
 
-    public int Uid { get; set; }
+    public int UId { get; set; }
 
-    public int Mid { get; set; }
+    public int MId { get; set; }
 
     public string WorldName { get; set; } = null!;
 
-    public DateOnly? Time { get; set; }
+    public DateOnly Time { get; set; }
 
     public int? Exp { get; set; }
 
     public double? Hunger { get; set; }
 
-    public double? Heath { get; set; }
+    public double? Health { get; set; }
 
     public virtual ICollection<Craft> Crafts { get; set; } = new List<Craft>();
 
@@ -27,9 +27,9 @@ public partial class Play
 
     public virtual ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
 
-    public virtual Mode MidNavigation { get; set; } = null!;
+    public virtual Mode MIdNavigation { get; set; } = null!;
 
-    public virtual ICollection<Transation> Transations { get; set; } = new List<Transation>();
+    public virtual ICollection<PlayResource> PlayResources { get; set; } = new List<PlayResource>();
 
-    public virtual Account UidNavigation { get; set; } = null!;
+    public virtual Account UIdNavigation { get; set; } = null!;
 }

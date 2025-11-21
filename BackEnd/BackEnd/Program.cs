@@ -5,9 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 var chuoiketnoi = builder.Configuration.GetConnectionString("ketnoi");
-builder.Services.AddDbContext<Gam106Context>(x => x.UseSqlServer(chuoiketnoi));
+builder.Services.AddDbContext<MinecraftContext>(x => x.UseSqlServer(chuoiketnoi));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

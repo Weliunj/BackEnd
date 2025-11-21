@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "BackEnd.Controllers.gam106Controller",
-    "Method": "GetAllAccount",
-    "RelativePath": "api/gam106",
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetAllAccounts",
+    "RelativePath": "api/Minecraft",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

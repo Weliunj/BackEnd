@@ -5,15 +5,15 @@ namespace BackEnd.Models;
 
 public partial class Craft
 {
-    public int Cid { get; set; }
+    public int CId { get; set; }
 
-    public DateOnly Time { get; set; }
+    public int PId { get; set; }
 
-    public int Pid { get; set; }
+    public int RcId { get; set; }
 
-    public int Rid { get; set; }
+    public DateOnly? Time { get; set; }
 
-    public virtual Play PidNavigation { get; set; } = null!;
+    public virtual Play PIdNavigation { get; set; } = null!;
 
-    public virtual Recipe RidNavigation { get; set; } = null!;
+    public virtual Recipe Rc { get; set; } = null!;
 }
