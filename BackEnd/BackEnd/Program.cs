@@ -3,11 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+//Ket noi CSDL
 var chuoiketnoi = builder.Configuration.GetConnectionString("ketnoi");
 builder.Services.AddDbContext<MinecraftContext>(x => x.UseSqlServer(chuoiketnoi));
+
+//Dang ky dich vu Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
+
+//Goi Swagger
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
