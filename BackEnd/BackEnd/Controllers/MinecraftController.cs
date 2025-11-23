@@ -10,16 +10,17 @@ namespace BackEnd.Controllers
     public class MinecraftController : Controller
     {
         MinecraftContext _minecraftContext;     //Ket noi DATABASE
+        ResponseAPI re;
         public MinecraftController(MinecraftContext context)        //Khoi tao contructor
         {
             _minecraftContext = context;
+            re = new ResponseAPI();
         }
 
         //Phương thức đọc dữ liệu
         [HttpGet("GetAcc")]       
         public async Task<IActionResult> GetAllAccounts()       //async: Hàm chạy bất đồng bộ
         {
-            var re = new ResponseAPI();
             try
             {
                 var data = await _minecraftContext.Items.ToListAsync();    //await: tam dung viec thuc thi khi truy van hoan tat
@@ -44,7 +45,6 @@ namespace BackEnd.Controllers
         [HttpPost("CreateAccount")] 
         public async Task<IActionResult> CreateAccount(string email, string password, string charname)
         {
-            var re = new ResponseAPI();     //Debug
             try
             {
                 //Add doi tuong
@@ -76,7 +76,6 @@ namespace BackEnd.Controllers
         [HttpPut("UpdateAcc")] 
         public async Task<IActionResult> UpdateAccount(Account acc)
         {
-            var re = new ResponseAPI();     //Debug
             try
             {
                 var getAcc = await _minecraftContext.Accounts.FirstOrDefaultAsync(x => x.UId == acc.UId);
@@ -115,7 +114,6 @@ namespace BackEnd.Controllers
         [HttpPatch("UpdateEmail")] 
         public async Task<IActionResult> UpdateEmail(int uid, string email)
         {
-            var re = new ResponseAPI();     //Debug
             try
             {
                 var getAcc = await _minecraftContext.Accounts.FirstOrDefaultAsync(x => x.UId == uid);
@@ -150,7 +148,6 @@ namespace BackEnd.Controllers
         [HttpDelete("DeleteAcc")] 
         public async Task<IActionResult> DeleteAcc(int uid)
         {
-            var re = new ResponseAPI();     //Debug
             try
             {
                 var getAcc = await _minecraftContext.Accounts.FirstOrDefaultAsync(x => x.UId == uid);
@@ -185,7 +182,6 @@ namespace BackEnd.Controllers
         [HttpGet("All resources")]        //1. Lấy thông tin tất cả các loại tài nguyên trong game 
         public async Task<IActionResult> GetAllResources()
         {
-            var re = new ResponseAPI();
             try
             {
                 var data = await _minecraftContext.Resources.ToListAsync();
@@ -242,7 +238,6 @@ namespace BackEnd.Controllers
         [HttpGet("Item.exp")]        //3. Lấy tất cả các vũ khí có giá trị trên 100 điểm kinh nghiệm
         public async Task<IActionResult> GetWeapsons()
         {
-            var re = new ResponseAPI();
             try
             {
                 var wp = await _minecraftContext.Items.Where(k => k.IKind == 1 && k.IPrice > 100).ToListAsync();
@@ -264,7 +259,6 @@ namespace BackEnd.Controllers
         [HttpGet("Item.Player")]        //4. Lấy thông tin các item mà người chơi có thể mua với số điểm kinh nghiệm tích lũy hiện tại của họ. 
         public async Task<IActionResult> GetItem(int Playerid)
         {
-            var re = new ResponseAPI();
             try
             {
                 var player = await _minecraftContext.Plays.FirstOrDefaultAsync(p => p.PId == Playerid);
@@ -294,7 +288,6 @@ namespace BackEnd.Controllers
         [HttpGet("Item.name")]        //5. Lấy thông tin các item có tên chứa từ 'kim cương' và có giá trị dưới 500 điểm kinh nghiệm 
         public async Task<IActionResult> GetItemKc()
         {
-            var re = new ResponseAPI();
             try
             {
                 var items = await _minecraftContext.Items.Where(i => i.IName.Contains("Kimcuong") && i.IPrice < 500).ToListAsync();
@@ -316,7 +309,6 @@ namespace BackEnd.Controllers
                                         //  sắp xếp theo thứ tự thời gian (thông tin người chơi cần lấy giao dịch sẽ cho người dùng truyền lên API) 
         public async Task<IActionResult> GetTransa(int Playerid)
         {
-            var re = new ResponseAPI();
             try
             {
                 var data = await _minecraftContext.Ptransactions.Where(t => t.PId == Playerid).ToListAsync();
@@ -338,7 +330,6 @@ namespace BackEnd.Controllers
         [HttpPost("Add item")]        //7. Thêm thông tin của một item mới
         public async Task<IActionResult> AddItem(string Name ,string? Img, int? Price, int? Kind)
         {
-            var re = new ResponseAPI();
             try
             {
                 Item item = new Item();
@@ -367,7 +358,6 @@ namespace BackEnd.Controllers
         [HttpPatch("Update pass")]        //8. Cập nhật mật khẩu của người chơi 
         public async Task<IActionResult> updatePass(int UId, string NewPassword)
         {
-            var re = new ResponseAPI();
             try
             {
                 var data = await _minecraftContext.Accounts.FirstOrDefaultAsync(a => a.UId == UId);
@@ -397,7 +387,6 @@ namespace BackEnd.Controllers
         [HttpGet("Item.Trans")]        //9. Lấy danh sách các item được mua nhiều nhất 
         public async Task<IActionResult> GetItemtMost()
         {
-            var re = new ResponseAPI();
             try
             {
                 var key = await _minecraftContext.Ptransactions.Where(s => s.Status == true).GroupBy(t => t.IId).Select(t=> new { iid=t.Key , quan = t.Count()}).OrderByDescending(i => i.quan).FirstOrDefaultAsync();
@@ -425,7 +414,6 @@ namespace BackEnd.Controllers
         [HttpGet("Play.Trans")]        //10. Lấy danh sách tất cả người chơi và số lần họ đã mua hàng
         public async Task<IActionResult> GetPlayer()
         {
-            var re = new ResponseAPI();
             try
             {
                 var data = await _minecraftContext.Ptransactions.Where(s => s.Status == true).GroupBy(p => p.PId).Select(n => new { pid = n.Key, solanmuahang = n.Count() }).
