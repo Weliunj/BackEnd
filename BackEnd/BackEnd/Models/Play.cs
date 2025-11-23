@@ -31,5 +31,7 @@ public partial class Play
 
     public virtual ICollection<PlayResource> PlayResources { get; set; } = new List<PlayResource>();
 
+    public virtual ICollection<Ptransaction> Ptransactions { get; set; } = new List<Ptransaction>();
+
     public virtual Account UIdNavigation { get; set; } = null!;
 }

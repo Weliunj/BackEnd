@@ -1,4 +1,4 @@
--- Setup: Create and use the database
+Ôªø-- Setup: Create and use the database
 CREATE DATABASE _Minecraft;
 GO
 USE _Minecraft;
@@ -6,109 +6,118 @@ GO
 
 -- Account Table
 CREATE TABLE Account (
-† † uID INT IDENTITY(1,1) PRIMARY KEY,
-† † email VARCHAR(50) NOT NULL UNIQUE,
-† † password VARCHAR(20) NOT NULL,
-† † charName NVARCHAR(50) NOT NULL UNIQUE
+¬† ¬† uID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† email VARCHAR(50) NOT NULL UNIQUE,
+¬† ¬† password VARCHAR(20) NOT NULL,
+¬† ¬† charName NVARCHAR(50) NOT NULL UNIQUE
 );
 
 -- Mode Table
 CREATE TABLE Mode (
-† † mID INT IDENTITY(1,1) PRIMARY KEY,
-† † mName NVARCHAR(50) NOT NULL
+¬† ¬† mID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† mName NVARCHAR(50) NOT NULL
 );
 
 -- Play Table (References Account, Mode)
 CREATE TABLE Play (
-† † pID INT IDENTITY(1,1) PRIMARY KEY,
-† † uID INT NOT NULL FOREIGN KEY REFERENCES Account(uID),
-† † mID INT NOT NULL FOREIGN KEY REFERENCES Mode(mID),
-† † worldName NVARCHAR(30) NOT NULL,
-† † time DATE NOT NULL,
-† † exp INT DEFAULT 0,
-† † hunger FLOAT,
-† † health FLOAT
+¬† ¬† pID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† uID INT NOT NULL FOREIGN KEY REFERENCES Account(uID),
+¬† ¬† mID INT NOT NULL FOREIGN KEY REFERENCES Mode(mID),
+¬† ¬† worldName NVARCHAR(30) NOT NULL,
+¬† ¬† time DATE NOT NULL,
+¬† ¬† exp INT DEFAULT 0,
+¬† ¬† hunger FLOAT,
+¬† ¬† health FLOAT
 );
 
 -- Item Table
 CREATE TABLE Item (
-† † iID INT IDENTITY(1,1) PRIMARY KEY,
-† † iName NVARCHAR(50) NOT NULL UNIQUE,
-† † iImg NVARCHAR(255),
-† † iPrice INT DEFAULT 0,
-† † iKind INT DEFAULT 0
+¬† ¬† iID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† iName NVARCHAR(50) NOT NULL UNIQUE,
+¬† ¬† iImg NVARCHAR(255),
+¬† ¬† iPrice INT DEFAULT 0,
+¬† ¬† iKind INT DEFAULT 0
 );
 
 -- Inventory Table (References Play, Item)
 CREATE TABLE Inventory (
-† † inID INT IDENTITY(1,1) PRIMARY KEY,
-† † pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
-† † iID INT NOT NULL FOREIGN KEY REFERENCES Item(iID),
-† † quantity INT DEFAULT 0
+¬† ¬† inID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
+¬† ¬† iID INT NOT NULL FOREIGN KEY REFERENCES Item(iID),
+¬† ¬† quantity INT DEFAULT 0
 );
 
 -- Resource Table
 CREATE TABLE Resource (
-† † rID INT IDENTITY(1,1) PRIMARY KEY,
-† † rName NVARCHAR(30) NOT NULL,
-† † rImg NVARCHAR(255)
+¬† ¬† rID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† rName NVARCHAR(30) NOT NULL,
+¬† ¬† rImg NVARCHAR(255)
 );
 
 -- PlayResource Table (References Play, Resource)
 CREATE TABLE PlayResource (
-† † prID INT IDENTITY(1,1) PRIMARY KEY,
-† † pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
-† † rID INT NOT NULL FOREIGN KEY REFERENCES Resource(rID),
-† † quantity INT DEFAULT 0
+¬† ¬† prID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
+¬† ¬† rID INT NOT NULL FOREIGN KEY REFERENCES Resource(rID),
+¬† ¬† quantity INT DEFAULT 0
 );
 
 -- Recipe Table (References Item)
 CREATE TABLE Recipe (
-† † rcID INT IDENTITY(1,1) PRIMARY KEY,
-† † rcName NVARCHAR(100),
-† † iID INT NOT NULL FOREIGN KEY REFERENCES Item(iID)
+¬† ¬† rcID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† rcName NVARCHAR(100),
+¬† ¬† iID INT NOT NULL FOREIGN KEY REFERENCES Item(iID)
 );
 
 -- RecipeDetail Table (References Resource, Recipe)
 CREATE TABLE RecipeDetail (
-† † rcldID INT IDENTITY(1,1) PRIMARY KEY,
-† † rID INT NOT NULL FOREIGN KEY REFERENCES Resource(rID),
-† † rcID INT NOT NULL FOREIGN KEY REFERENCES Recipe(rcID),
-† † quantity INT DEFAULT 1
+¬† ¬† rcldID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† rID INT NOT NULL FOREIGN KEY REFERENCES Resource(rID),
+¬† ¬† rcID INT NOT NULL FOREIGN KEY REFERENCES Recipe(rcID),
+¬† ¬† quantity INT DEFAULT 1
 );
 
 -- Quest Table (References Item, Mode)
 CREATE TABLE Quest (
-† † qID INT IDENTITY(1,1) PRIMARY KEY,
-† † qName VARCHAR(50) NOT NULL UNIQUE,
-† † exp INT,
-† † iID INT FOREIGN KEY REFERENCES Item(iID),
-† † mID INT FOREIGN KEY REFERENCES Mode(mID)
+¬† ¬† qID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† qName VARCHAR(50) NOT NULL UNIQUE,
+¬† ¬† exp INT,
+¬† ¬† iID INT FOREIGN KEY REFERENCES Item(iID),
+¬† ¬† mID INT FOREIGN KEY REFERENCES Mode(mID)
 );
 
 -- DoQuest Table (References Quest, Play)
 CREATE TABLE DoQuest (
-† † dqID INT IDENTITY(1,1) PRIMARY KEY,
-† † status BIT,
-† † time DATE,
-† † qID INT NOT NULL FOREIGN KEY REFERENCES Quest(qID),
-† † pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID)
+¬† ¬† dqID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† status BIT,
+¬† ¬† time DATE,
+¬† ¬† qID INT NOT NULL FOREIGN KEY REFERENCES Quest(qID),
+¬† ¬† pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID)
 );
 
 -- Craft Table (References Play, Recipe)
 CREATE TABLE Craft (
-† † cID INT IDENTITY(1,1) PRIMARY KEY,
-† † pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
-† † rcID INT NOT NULL FOREIGN KEY REFERENCES Recipe(rcID),
-† † time DATE
+¬† ¬† cID INT IDENTITY(1,1) PRIMARY KEY,
+¬† ¬† pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
+¬† ¬† rcID INT NOT NULL FOREIGN KEY REFERENCES Recipe(rcID),
+¬† ¬† time DATE
 );
 
+-- Craft Transaction (References Play, Item)
+CREATE TABLE PTransaction (
+    tid INT IDENTITY(1,1) PRIMARY KEY,
+    pID INT NOT NULL FOREIGN KEY REFERENCES Play(pID),
+    iID INT NOT NULL FOREIGN KEY REFERENCES Item(iID), -- ƒê√£ s·ª≠a iid th√†nh iID ƒë·ªÉ kh·ªõp v·ªõi PK c·ªßa Item
+    time DATETIME NOT NULL,
+	Status BIT,
+	value FLOAT DEFAULT 0
+);
 
 -- DML (Data Manipulation Language)
 
 -- Account
 INSERT INTO Account (email, password, charName)
-VALUES†
+VALUES¬†
 ('user1@gmail.com', 'pass123', N'HeroOne'),
 ('user2@gmail.com', 'pass456', N'HeroTwo'),
 ('user3@gmail.com', 'pass789', N'HeroThree'),
@@ -122,7 +131,7 @@ VALUES†
 
 -- Mode
 INSERT INTO Mode (mName)
-VALUES†
+VALUES¬†
 (N'Adventure'), (N'Survival'), (N'Creative'), (N'Hardcore'),
 (N'Battle Royale'), (N'Co-op'), (N'PVE'), (N'PVP'),
 (N'Custom'), (N'Tutorial');
@@ -143,7 +152,7 @@ VALUES
 
 -- Item
 INSERT INTO Item (iName, iImg, iPrice, iKind)
-VALUES†
+VALUES¬†
 (N'Sword', N'sword.png', 100, 1),
 (N'Armor', N'armor.png', 200, 1),
 (N'Potion', N'potion.png', 50, 0),
@@ -236,3 +245,31 @@ VALUES
 (4, 4, '2024-11-04'), (5, 5, '2024-11-05'), (6, 6, '2024-11-06'),
 (7, 7, '2024-11-07'), (8, 8, '2024-11-08'), (9, 9, '2024-11-09'),
 (10, 10, '2024-11-10');
+
+INSERT INTO PTransaction (pID, iID, time, Status, value)
+VALUES
+(5, 6, '2025-01-15', 1, 180.0),
+(10, 10, '2025-02-01', 1, 250.0),
+(7, 2, '2025-03-20', 0, 200.0),
+(4, 5, '2025-04-10', 1, 150.0),
+(8, 7, '2025-05-05', 1, 80.0),
+(1, 1, '2025-06-01', 1, 100.0),
+(2, 3, '2025-06-01', 1, 50.0),
+(3, 4, '2025-06-02', 0, 30.0),
+(6, 9, '2025-06-03', 1, 90.0),
+(9, 1, '2025-06-04', 1, 100.0),
+(1, 2, '2025-07-01', 1, 200.0),
+(2, 4, '2025-07-05', 1, 30.0),
+(3, 5, '2025-08-10', 1, 150.0),
+(4, 6, '2025-09-01', 0, 180.0),
+(5, 7, '2025-09-01', 1, 80.0),
+(6, 8, '2025-10-10', 1, 120.0),
+(7, 9, '2025-10-15', 1, 90.0),
+(8, 10, '2025-11-20', 1, 250.0),
+(9, 3, '2025-11-20', 1, 50.0),
+(10, 1, '2025-12-31', 0, 100.0),
+(1, 8, '2025-12-31', 1, 120.0),
+(2, 5, '2025-12-31', 1, 150.0),
+(3, 1, '2025-12-31', 1, 100.0),
+(4, 2, '2025-12-31', 0, 200.0),
+(5, 3, '2025-12-31', 1, 50.0);

@@ -1,6 +1,79 @@
 [
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetTransa",
+    "RelativePath": "api/Minecraft/6",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Playerid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "AddItem",
+    "RelativePath": "api/Minecraft/Add item",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Img",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Price",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Kind",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetPlayers",
+    "RelativePath": "api/Minecraft/All player.mode",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "ModeName",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetAllResources",
+    "RelativePath": "api/Minecraft/All resources",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "CreateAccount",
     "RelativePath": "api/Minecraft/CreateAccount",
     "HttpMethod": "POST",
@@ -27,22 +100,6 @@
   },
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
-    "Method": "CreateMode",
-    "RelativePath": "api/Minecraft/CreateMode",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Mname",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "DeleteAcc",
     "RelativePath": "api/Minecraft/DeleteAcc",
     "HttpMethod": "DELETE",
@@ -60,11 +117,88 @@
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetAllAccounts",
-    "RelativePath": "api/Minecraft/Get",
+    "RelativePath": "api/Minecraft/GetAcc",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetWeapsons",
+    "RelativePath": "api/Minecraft/Item.exp",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetItemKc",
+    "RelativePath": "api/Minecraft/Item.name",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetItem",
+    "RelativePath": "api/Minecraft/Item.Player",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Playerid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetItemtMost",
+    "RelativePath": "api/Minecraft/Item.Trans",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetPlayer",
+    "RelativePath": "api/Minecraft/Play.Trans",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "updatePass",
+    "RelativePath": "api/Minecraft/Update pass",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "NewPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

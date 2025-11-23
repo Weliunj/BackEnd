@@ -17,6 +17,8 @@ public partial class Item
 
     public virtual ICollection<Inventory> Inventories { get; set; } = new List<Inventory>();
 
+    public virtual ICollection<Ptransaction> Ptransactions { get; set; } = new List<Ptransaction>();
+
     public virtual ICollection<Quest> Quests { get; set; } = new List<Quest>();
 
     public virtual ICollection<Recipe> Recipes { get; set; } = new List<Recipe>();

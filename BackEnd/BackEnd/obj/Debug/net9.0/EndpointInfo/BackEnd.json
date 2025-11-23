@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Minecraft/Get": {
+    "/api/Minecraft/GetAcc": {
       "get": {
         "tags": [
           "Minecraft"
@@ -39,27 +39,6 @@
           },
           {
             "name": "charname",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Minecraft/CreateMode": {
-      "post": {
-        "tags": [
-          "Minecraft"
-        ],
-        "parameters": [
-          {
-            "name": "Mname",
             "in": "query",
             "schema": {
               "type": "string"
@@ -147,6 +126,204 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/All resources": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/All player.mode": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "parameters": [
+          {
+            "name": "ModeName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Item.exp": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Item.Player": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "parameters": [
+          {
+            "name": "Playerid",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Item.name": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/6": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "parameters": [
+          {
+            "name": "Playerid",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Add item": {
+      "post": {
+        "tags": [
+          "Minecraft"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Img",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Price",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Kind",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Update pass": {
+      "patch": {
+        "tags": [
+          "Minecraft"
+        ],
+        "parameters": [
+          {
+            "name": "UId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "NewPassword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Item.Trans": {
+      "get": {
+        "tags": [
+          "Minecraft"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Minecraft/Play.Trans": {
+      "get": {
+        "tags": [
+          "Minecraft"
         ],
         "responses": {
           "200": {
@@ -310,6 +487,13 @@
             },
             "nullable": true
           },
+          "ptransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ptransaction"
+            },
+            "nullable": true
+          },
           "quests": {
             "type": "array",
             "items": {
@@ -424,6 +608,13 @@
             },
             "nullable": true
           },
+          "ptransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ptransaction"
+            },
+            "nullable": true
+          },
           "uIdNavigation": {
             "$ref": "#/components/schemas/Account"
           }
@@ -455,6 +646,43 @@
           },
           "rIdNavigation": {
             "$ref": "#/components/schemas/Resource"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ptransaction": {
+        "type": "object",
+        "properties": {
+          "tid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "iId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "iIdNavigation": {
+            "$ref": "#/components/schemas/Item"
+          },
+          "pIdNavigation": {
+            "$ref": "#/components/schemas/Play"
           }
         },
         "additionalProperties": false

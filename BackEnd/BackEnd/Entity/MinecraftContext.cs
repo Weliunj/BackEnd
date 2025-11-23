@@ -32,6 +32,8 @@ public partial class MinecraftContext : DbContext
 
     public virtual DbSet<PlayResource> PlayResources { get; set; }
 
+    public virtual DbSet<Ptransaction> Ptransactions { get; set; }
+
     public virtual DbSet<Quest> Quests { get; set; }
 
     public virtual DbSet<Recipe> Recipes { get; set; }
@@ -40,17 +42,21 @@ public partial class MinecraftContext : DbContext
 
     public virtual DbSet<Resource> Resources { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=_Minecraft;User Id=sa;Password=ThanhQuy!111226;TrustServerCertificate=True");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.UId).HasName("PK__Account__DD771E3C9DED8FB7");
+            entity.HasKey(e => e.UId).HasName("PK__Account__DD771E3C029F54D7");
 
             entity.ToTable("Account");
 
-            entity.HasIndex(e => e.Email, "UQ__Account__AB6E61643AF4D126").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Account__AB6E6164D5408860").IsUnique();
 
-            entity.HasIndex(e => e.CharName, "UQ__Account__ABC56DFBC72FA5B8").IsUnique();
+            entity.HasIndex(e => e.CharName, "UQ__Account__ABC56DFBA1E2148F").IsUnique();
 
             entity.Property(e => e.UId).HasColumnName("uID");
             entity.Property(e => e.CharName)
@@ -68,7 +74,7 @@ public partial class MinecraftContext : DbContext
 
         modelBuilder.Entity<Craft>(entity =>
         {
-            entity.HasKey(e => e.CId).HasName("PK__Craft__D830D45714F634FC");
+            entity.HasKey(e => e.CId).HasName("PK__Craft__D830D457A0FF5C85");
 
             entity.ToTable("Craft");
 
@@ -80,17 +86,17 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.PIdNavigation).WithMany(p => p.Crafts)
                 .HasForeignKey(d => d.PId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Craft__pID__1EA48E88");
+                .HasConstraintName("FK__Craft__pID__540C7B00");
 
             entity.HasOne(d => d.Rc).WithMany(p => p.Crafts)
                 .HasForeignKey(d => d.RcId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Craft__rcID__1F98B2C1");
+                .HasConstraintName("FK__Craft__rcID__55009F39");
         });
 
         modelBuilder.Entity<DoQuest>(entity =>
         {
-            entity.HasKey(e => e.DqId).HasName("PK__DoQuest__2D1CC078901890FC");
+            entity.HasKey(e => e.DqId).HasName("PK__DoQuest__2D1CC078F5DEF5D0");
 
             entity.ToTable("DoQuest");
 
@@ -103,17 +109,17 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.PIdNavigation).WithMany(p => p.DoQuests)
                 .HasForeignKey(d => d.PId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__DoQuest__pID__1BC821DD");
+                .HasConstraintName("FK__DoQuest__pID__51300E55");
 
             entity.HasOne(d => d.QIdNavigation).WithMany(p => p.DoQuests)
                 .HasForeignKey(d => d.QId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__DoQuest__qID__1AD3FDA4");
+                .HasConstraintName("FK__DoQuest__qID__503BEA1C");
         });
 
         modelBuilder.Entity<Inventory>(entity =>
         {
-            entity.HasKey(e => e.InId).HasName("PK__Inventor__94BA3A3680318FAC");
+            entity.HasKey(e => e.InId).HasName("PK__Inventor__94BA3A364F5E73B7");
 
             entity.ToTable("Inventory");
 
@@ -127,21 +133,21 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.IIdNavigation).WithMany(p => p.Inventories)
                 .HasForeignKey(d => d.IId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Inventory__iID__03F0984C");
+                .HasConstraintName("FK__Inventory__iID__395884C4");
 
             entity.HasOne(d => d.PIdNavigation).WithMany(p => p.Inventories)
                 .HasForeignKey(d => d.PId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Inventory__pID__02FC7413");
+                .HasConstraintName("FK__Inventory__pID__3864608B");
         });
 
         modelBuilder.Entity<Item>(entity =>
         {
-            entity.HasKey(e => e.IId).HasName("PK__Item__DC512D728993379F");
+            entity.HasKey(e => e.IId).HasName("PK__Item__DC512D724B66BB1B");
 
             entity.ToTable("Item");
 
-            entity.HasIndex(e => e.IName, "UQ__Item__163DA42576B06281").IsUnique();
+            entity.HasIndex(e => e.IName, "UQ__Item__163DA425D5A1E0D8").IsUnique();
 
             entity.Property(e => e.IId).HasColumnName("iID");
             entity.Property(e => e.IImg)
@@ -160,7 +166,7 @@ public partial class MinecraftContext : DbContext
 
         modelBuilder.Entity<Mode>(entity =>
         {
-            entity.HasKey(e => e.MId).HasName("PK__Mode__DF513EB4D84AC301");
+            entity.HasKey(e => e.MId).HasName("PK__Mode__DF513EB459BAE5F8");
 
             entity.ToTable("Mode");
 
@@ -172,7 +178,7 @@ public partial class MinecraftContext : DbContext
 
         modelBuilder.Entity<Play>(entity =>
         {
-            entity.HasKey(e => e.PId).HasName("PK__Play__DD36D5020C18C497");
+            entity.HasKey(e => e.PId).HasName("PK__Play__DD36D5029AE82946");
 
             entity.ToTable("Play");
 
@@ -192,17 +198,17 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.MIdNavigation).WithMany(p => p.Plays)
                 .HasForeignKey(d => d.MId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Play__mID__7A672E12");
+                .HasConstraintName("FK__Play__mID__2FCF1A8A");
 
             entity.HasOne(d => d.UIdNavigation).WithMany(p => p.Plays)
                 .HasForeignKey(d => d.UId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Play__uID__797309D9");
+                .HasConstraintName("FK__Play__uID__2EDAF651");
         });
 
         modelBuilder.Entity<PlayResource>(entity =>
         {
-            entity.HasKey(e => e.PrId).HasName("PK__PlayReso__466486B5B0F7124E");
+            entity.HasKey(e => e.PrId).HasName("PK__PlayReso__466486B5D9748A44");
 
             entity.ToTable("PlayResource");
 
@@ -216,21 +222,48 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.PIdNavigation).WithMany(p => p.PlayResources)
                 .HasForeignKey(d => d.PId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PlayResourc__pID__09A971A2");
+                .HasConstraintName("FK__PlayResourc__pID__3F115E1A");
 
             entity.HasOne(d => d.RIdNavigation).WithMany(p => p.PlayResources)
                 .HasForeignKey(d => d.RId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PlayResourc__rID__0A9D95DB");
+                .HasConstraintName("FK__PlayResourc__rID__40058253");
+        });
+
+        modelBuilder.Entity<Ptransaction>(entity =>
+        {
+            entity.HasKey(e => e.Tid).HasName("PK__PTransac__DC105B0F89A3B386");
+
+            entity.ToTable("PTransaction");
+
+            entity.Property(e => e.Tid).HasColumnName("tid");
+            entity.Property(e => e.IId).HasColumnName("iID");
+            entity.Property(e => e.PId).HasColumnName("pID");
+            entity.Property(e => e.Time)
+                .HasColumnType("datetime")
+                .HasColumnName("time");
+            entity.Property(e => e.Value)
+                .HasDefaultValue(0.0)
+                .HasColumnName("value");
+
+            entity.HasOne(d => d.IIdNavigation).WithMany(p => p.Ptransactions)
+                .HasForeignKey(d => d.IId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__PTransactio__iID__58D1301D");
+
+            entity.HasOne(d => d.PIdNavigation).WithMany(p => p.Ptransactions)
+                .HasForeignKey(d => d.PId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__PTransactio__pID__57DD0BE4");
         });
 
         modelBuilder.Entity<Quest>(entity =>
         {
-            entity.HasKey(e => e.QId).HasName("PK__Quest__C276CFE92689786B");
+            entity.HasKey(e => e.QId).HasName("PK__Quest__C276CFE9D447390C");
 
             entity.ToTable("Quest");
 
-            entity.HasIndex(e => e.QName, "UQ__Quest__05FC0926394CCCB4").IsUnique();
+            entity.HasIndex(e => e.QName, "UQ__Quest__05FC09269404C346").IsUnique();
 
             entity.Property(e => e.QId).HasColumnName("qID");
             entity.Property(e => e.Exp).HasColumnName("exp");
@@ -243,16 +276,16 @@ public partial class MinecraftContext : DbContext
 
             entity.HasOne(d => d.IIdNavigation).WithMany(p => p.Quests)
                 .HasForeignKey(d => d.IId)
-                .HasConstraintName("FK__Quest__iID__17036CC0");
+                .HasConstraintName("FK__Quest__iID__4C6B5938");
 
             entity.HasOne(d => d.MIdNavigation).WithMany(p => p.Quests)
                 .HasForeignKey(d => d.MId)
-                .HasConstraintName("FK__Quest__mID__17F790F9");
+                .HasConstraintName("FK__Quest__mID__4D5F7D71");
         });
 
         modelBuilder.Entity<Recipe>(entity =>
         {
-            entity.HasKey(e => e.RcId).HasName("PK__Recipe__CA284E31E5B61E62");
+            entity.HasKey(e => e.RcId).HasName("PK__Recipe__CA284E315FFC50B3");
 
             entity.ToTable("Recipe");
 
@@ -265,12 +298,12 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.IIdNavigation).WithMany(p => p.Recipes)
                 .HasForeignKey(d => d.IId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Recipe__iID__0E6E26BF");
+                .HasConstraintName("FK__Recipe__iID__43D61337");
         });
 
         modelBuilder.Entity<RecipeDetail>(entity =>
         {
-            entity.HasKey(e => e.RcldId).HasName("PK__RecipeDe__94BB89FE813DC0C1");
+            entity.HasKey(e => e.RcldId).HasName("PK__RecipeDe__94BB89FECAD648EC");
 
             entity.ToTable("RecipeDetail");
 
@@ -284,17 +317,17 @@ public partial class MinecraftContext : DbContext
             entity.HasOne(d => d.RIdNavigation).WithMany(p => p.RecipeDetails)
                 .HasForeignKey(d => d.RId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__RecipeDetai__rID__114A936A");
+                .HasConstraintName("FK__RecipeDetai__rID__46B27FE2");
 
             entity.HasOne(d => d.Rc).WithMany(p => p.RecipeDetails)
                 .HasForeignKey(d => d.RcId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__RecipeDeta__rcID__123EB7A3");
+                .HasConstraintName("FK__RecipeDeta__rcID__47A6A41B");
         });
 
         modelBuilder.Entity<Resource>(entity =>
         {
-            entity.HasKey(e => e.RId).HasName("PK__Resource__C2BEC9101C33FCC9");
+            entity.HasKey(e => e.RId).HasName("PK__Resource__C2BEC9109298872C");
 
             entity.ToTable("Resource");
 
