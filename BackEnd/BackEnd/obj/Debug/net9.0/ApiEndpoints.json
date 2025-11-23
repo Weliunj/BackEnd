@@ -1,22 +1,6 @@
 [
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
-    "Method": "GetTransa",
-    "RelativePath": "api/Minecraft/6",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Playerid",
-        "Type": "System.Int32",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "AddItem",
     "RelativePath": "api/Minecraft/Add item",
     "HttpMethod": "POST",
@@ -178,6 +162,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "GetTransa",
+    "RelativePath": "api/Minecraft/Trans.Play",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Playerid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

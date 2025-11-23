@@ -213,7 +213,7 @@
         }
       }
     },
-    "/api/Minecraft/6": {
+    "/api/Minecraft/Trans.Play": {
       "get": {
         "tags": [
           "Minecraft"

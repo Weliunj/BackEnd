@@ -312,27 +312,28 @@ namespace BackEnd.Controllers
             }
         }
 
-            [HttpGet("6")]        //6. Lấy thông tin tất cả các giao dịch mua item và phương tiện của một người chơi cụ thể,
-                                  //  sắp xếp theo thứ tự thời gian (thông tin người chơi cần lấy giao dịch sẽ cho người dùng truyền lên API) 
-            public async Task<IActionResult> GetTransa(int Playerid)
+        [HttpGet("Trans.Play")]        //6. Lấy thông tin tất cả các giao dịch mua item và phương tiện của một người chơi cụ thể,
+                                        //  sắp xếp theo thứ tự thời gian (thông tin người chơi cần lấy giao dịch sẽ cho người dùng truyền lên API) 
+        public async Task<IActionResult> GetTransa(int Playerid)
+        {
+            var re = new ResponseAPI();
+            try
             {
-                var re = new ResponseAPI();
-                try
-                {
-                    var items = await _minecraftContext.Items.Where(i => i.IName.Contains("Kimcuong") && i.IPrice < 500).ToListAsync();
-                    re.message = "Lấy dữ liệu thành công";
-                    re.success = true;
-                    re.data = items;
-                    return Ok(re);    //Code 400
-                }
-                catch (Exception ex)
-                {
-                    re.message = "Lấy dữ liệu không thành công";
-                    re.success = false;
-                    re.data = ex.Message;
-                    return BadRequest(re);
-                }
+                var data = await _minecraftContext.Ptransactions.Where(t => t.PId == Playerid).ToListAsync();
+                if(data == null) { return NotFound(re); }
+                re.message = "Lấy dữ liệu thành công";
+                re.success = true;
+                re.data = data;
+                return Ok(re);    //Code 400
             }
+            catch (Exception ex)
+            {
+                re.message = "Lấy dữ liệu không thành công";
+                re.success = false;
+                re.data = ex.Message;
+                return BadRequest(re);
+            }
+        }
 
         [HttpPost("Add item")]        //7. Thêm thông tin của một item mới
         public async Task<IActionResult> AddItem(string Name ,string? Img, int? Price, int? Kind)
