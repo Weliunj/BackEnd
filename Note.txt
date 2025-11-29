@@ -1,0 +1,83 @@
+1. Tạo database
+
+2. Tạo project C# .NET core Model View Control
+   Chuột phải vào tên project, Manage Nuget Package
+   Tải
+   Microsoft.EntityFrameWorkCore
+   Microsoft.EntityFrameWorkCore.SqlServer
+   Microsoft.EntityFrameWorkCore.Tools
+   Swashbuckle.AspNetCore
+
+3. Tools / NuGet Package Manager / Package Manager Console
+   Scaffold-DbContext "Server=...;Database=...;Integrated Security=True/User id=... Password=...;
+   TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -ContextDir Entity
+
+4. Bảo mật chuỗi kết nối
+   Mở file Context, tìm chuỗi kết nối chuyển sang file (xóa bên context (3 dòng))
+   Tìm file appsettings.json thêm nội dung (dòng trong " ")
+   "ConnectionStrings": {
+     "ketnoi": "..."
+   }
+   Mở file program.cs
+   khai báo biến và thêm dòng builder
+   var chuoiketnoi = builder.Configuration.GetConnectionString("ketnoi");
+   builder.Services.AddDbContext<Gam106Context>(x => x.UseSqlServer(chuoiketnoi));
+
+5. Tạo class /Models
+   namespace BackEnd.Models
+   {
+       public class ResponseAPI
+       {
+        	public string message { get; set; }
+        	public bool success { get; set; }
+        	public object data { get; set; }
+       }
+   }
+
+6. Thêm DB, Swagger (dưới dòng Using)
+    var builder = WebApplication.CreateBuilder(args);
+
+    //Ket noi CSDL
+    var chuoiketnoi = builder.Configuration.GetConnectionString("ketnoi");
+    builder.Services.AddDbContext<MinecraftContext>(x => x.UseSqlServer(chuoiketnoi));
+
+    //Dang ky dich vu Swagger
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
+
+    var app = builder.Build();
+
+    //Goi Swagger
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
+7. Tạo controller mới
+   [Route("api/[controller]")]     //attribute định nghĩa URL      /api/Minecraft
+   [ApiController]     //Code sạch, an toàn
+   public class ...Controller : Controller
+   {
+       ...Context ...context;     //Ket noi DATABASE
+       ResponseAPI re;
+       public ...Controller(...context context)        //Khoi tao contructor
+       {
+           ...context = context;
+           re = new ResponseAPI();
+       }
+   ...Code()
+}
+
+
+
+JSON WEB TOKEN
+Application.persistentDataPath
+/*
+    Application.persistentDataPath
+    - đường dẫn thư mục mà Unity cung cấp để lưu dữ liệu vĩnh viễn (persistent) trên thiết bị.
+
+    Windows	    C:/Users/<User>/AppData/LocalLow/<CompanyName>/<ProductName>
+    Android	    /storage/emulated/0/Android/data/<package>/files
+    iOS	        /var/mobile/Containers/Data/Application/<UUID>/Documents
+*/
