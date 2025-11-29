@@ -134,6 +134,41 @@
         }
       }
     },
+    "/api/Minecraft/upload": {
+      "post": {
+        "tags": [
+          "Minecraft"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              },
+              "encoding": {
+                "files": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Minecraft/All resources": {
       "get": {
         "tags": [
@@ -167,10 +202,21 @@
         }
       }
     },
-    "/api/Minecraft/Item.exp": {
+    "/api/Minecraft/Item.exp > 100": {
       "get": {
         "tags": [
           "Minecraft"
+        ],
+        "parameters": [
+          {
+            "name": "Price",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -179,7 +225,7 @@
         }
       }
     },
-    "/api/Minecraft/Item.Player": {
+    "/api/Minecraft/Item.Player ": {
       "get": {
         "tags": [
           "Minecraft"
@@ -201,7 +247,7 @@
         }
       }
     },
-    "/api/Minecraft/Item.name": {
+    "/api/Minecraft/Item.name Kimcuong": {
       "get": {
         "tags": [
           "Minecraft"
@@ -213,7 +259,7 @@
         }
       }
     },
-    "/api/Minecraft/Trans.Play": {
+    "/api/Minecraft/Trans.Play OrderBy": {
       "get": {
         "tags": [
           "Minecraft"
@@ -308,7 +354,7 @@
         }
       }
     },
-    "/api/Minecraft/Item.Trans": {
+    "/api/Minecraft/Item.Trans First": {
       "get": {
         "tags": [
           "Minecraft"
@@ -320,7 +366,7 @@
         }
       }
     },
-    "/api/Minecraft/Play.Trans": {
+    "/api/Minecraft/Play.Trans Solanmua": {
       "get": {
         "tags": [
           "Minecraft"

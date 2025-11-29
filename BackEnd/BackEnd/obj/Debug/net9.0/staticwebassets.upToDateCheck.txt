@@ -61,6 +61,8 @@ wwwroot\lib\jquery\dist\jquery.slim.js
 wwwroot\lib\jquery\dist\jquery.slim.min.js
 wwwroot\lib\jquery\dist\jquery.slim.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\uploads\App_Logo.png
+wwwroot\uploads\Meme.jpg
 E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\wwwroot\css\site.css
 E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\wwwroot\favicon.ico
 E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\wwwroot\js\site.js

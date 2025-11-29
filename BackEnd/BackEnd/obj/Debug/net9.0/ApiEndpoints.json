@@ -111,17 +111,23 @@
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetWeapsons",
-    "RelativePath": "api/Minecraft/Item.exp",
+    "RelativePath": "api/Minecraft/Item.exp \u003E 100",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "Price",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetItemKc",
-    "RelativePath": "api/Minecraft/Item.name",
+    "RelativePath": "api/Minecraft/Item.name Kimcuong",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -131,7 +137,7 @@
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetItem",
-    "RelativePath": "api/Minecraft/Item.Player",
+    "RelativePath": "api/Minecraft/Item.Player ",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -147,7 +153,7 @@
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetItemtMost",
-    "RelativePath": "api/Minecraft/Item.Trans",
+    "RelativePath": "api/Minecraft/Item.Trans First",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -157,7 +163,7 @@
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetPlayer",
-    "RelativePath": "api/Minecraft/Play.Trans",
+    "RelativePath": "api/Minecraft/Play.Trans Solanmua",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -167,7 +173,7 @@
   {
     "ContainingType": "BackEnd.Controllers.MinecraftController",
     "Method": "GetTransa",
-    "RelativePath": "api/Minecraft/Trans.Play",
+    "RelativePath": "api/Minecraft/Trans.Play OrderBy",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -233,6 +239,22 @@
       {
         "Name": "email",
         "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "BackEnd.Controllers.MinecraftController",
+    "Method": "UploadFiles",
+    "RelativePath": "api/Minecraft/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "files",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
         "IsRequired": false
       }
     ],

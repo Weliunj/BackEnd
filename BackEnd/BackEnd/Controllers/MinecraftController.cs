@@ -10,6 +10,7 @@ namespace BackEnd.Controllers
     public class MinecraftController : Controller
     {
         MinecraftContext _minecraftContext;     //Ket noi DATABASE
+
         ResponseAPI re;
         public MinecraftController(MinecraftContext context)        //Khoi tao contructor
         {
@@ -18,7 +19,7 @@ namespace BackEnd.Controllers
         }
 
         //Phương thức đọc dữ liệu
-        [HttpGet("GetAcc")]       
+        [HttpGet("GetAcc")]
         public async Task<IActionResult> GetAllAccounts()       //async: Hàm chạy bất đồng bộ
         {
             try
@@ -42,7 +43,7 @@ namespace BackEnd.Controllers
         }
 
         //Phương thức ghi dữ liệu
-        [HttpPost("CreateAccount")] 
+        [HttpPost("CreateAccount")]
         public async Task<IActionResult> CreateAccount(string email, string password, string charname)
         {
             try
@@ -53,7 +54,7 @@ namespace BackEnd.Controllers
                 account.Password = password;
                 account.CharName = charname;
 
-                _minecraftContext.Accounts.Add(account);     
+                _minecraftContext.Accounts.Add(account);
                 await _minecraftContext.SaveChangesAsync();     //INSERT
 
                 re.message = "Tạo tài khoản thành công";
@@ -73,7 +74,7 @@ namespace BackEnd.Controllers
         }
 
         //Phương thức cập nhật dữ liệu
-        [HttpPut("UpdateAcc")] 
+        [HttpPut("UpdateAcc")]
         public async Task<IActionResult> UpdateAccount(Account acc)
         {
             try
@@ -111,7 +112,7 @@ namespace BackEnd.Controllers
         }
 
         //Phương thức cập nhật dữ liệu, cập nhật 1 phần
-        [HttpPatch("UpdateEmail")] 
+        [HttpPatch("UpdateEmail")]
         public async Task<IActionResult> UpdateEmail(int uid, string email)
         {
             try
@@ -145,7 +146,7 @@ namespace BackEnd.Controllers
         }
 
         //Phương thức xóa dữ liệu
-        [HttpDelete("DeleteAcc")] 
+        [HttpDelete("DeleteAcc")]
         public async Task<IActionResult> DeleteAcc(int uid)
         {
             try
@@ -177,6 +178,67 @@ namespace BackEnd.Controllers
                 return BadRequest(re); //code 400
             }
         }
+        [HttpPost("upload")]
+        public async Task<IActionResult> UploadFiles([FromForm] List<IFormFile> files)
+        {
+            ResponseAPI re = new ResponseAPI(); //xem lớp ResponseAPI tại phần 4 - REST API
+            try
+            {
+                //nếu không có file được đưa vào
+                if (files == null || files.Count == 0)
+                {
+                    re.message = "Không có file nào được chọn";
+                    re.success = false;
+                    re.data = "Không có file";
+                    return BadRequest(re);
+                }
+
+                //Sử dụng thư mục Project/wwwroot/uploads để lưu files
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
+
+                /*
+                    Application.persistentDataPath
+                    - đường dẫn thư mục mà Unity cung cấp để lưu dữ liệu vĩnh viễn (persistent) trên thiết bị.
+
+                    Windows	    C:/Users/<User>/AppData/LocalLow/<CompanyName>/<ProductName>
+                    Android	    /storage/emulated/0/Android/data/<package>/files
+                    iOS	        /var/mobile/Containers/Data/Application/<UUID>/Documents
+                */
+
+                //Tạo thư mục nếu chưa có
+                Directory.CreateDirectory(uploadPath);
+
+                //Khai báo danh sách string để lấy ra tên của các file đã upload thành công
+                var uploadedfiles = new List<string>();
+
+                //Duyệt qua các files được truyền vào
+                foreach (var file in files)
+                {
+                    //Tạo đường dẫn lưu file gồm đường dẫn tới thư mục upload và tên file
+                    var filePath = Path.Combine(uploadPath, file.FileName);
+                    //Sử dụng Lớp FileStream để mở 1 file với chế độ tạo mới theo đường dẫn ở trên
+                    using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                    {
+                        //file được copy và chờ cho đến khi tạo xong file bằng FileStream
+                        await file.CopyToAsync(fs);
+                    }
+                    //Thêm tên file vào trong danh sách các file đã upload thành công
+                    uploadedfiles.Add(file.FileName);
+                }
+
+                re.message = "upload thành công";
+                re.success = true;
+                re.data = uploadedfiles;
+
+                return Ok(re);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
 
 
         [HttpGet("All resources")]        //1. Lấy thông tin tất cả các loại tài nguyên trong game 
@@ -202,45 +264,44 @@ namespace BackEnd.Controllers
             }
         }
 
-            [HttpGet("All player.mode")]        //2. Lấy thông tin tất cả người chơi theo từng chế độ chơi (thông tin chế độ chơi sẽ do người dùng truyền lên API, ví dụ: 'Sinh tồn') 
-            public async Task<IActionResult> GetPlayers(string ModeName)
+        [HttpGet("All player.mode")]        //2. Lấy thông tin tất cả người chơi theo từng chế độ chơi (thông tin chế độ chơi sẽ do người dùng truyền lên API, ví dụ: 'Sinh tồn') 
+        public async Task<IActionResult> GetPlayers(string ModeName)
+        {
+            var re = new ResponseAPI();
+            try
             {
-                var re = new ResponseAPI();
-                try
+                var modename = await _minecraftContext.Modes.FirstOrDefaultAsync(m => m.MName.Contains(ModeName));
+                if (modename == null)
                 {
-                    var modename = await _minecraftContext.Modes.FirstOrDefaultAsync(m => m.MName.Contains(ModeName));
-                    if (modename == null)
-                    {
                     re.message = "Loi";
                     re.success = false;
                     re.data = null;
-
                     return NotFound(re);
                 }
-                var data = await _minecraftContext.Plays.Where(n => n.MId == modename.MId).Select(n => new {n.PId, n.UId, n.MId, n.WorldName, n.Time, n.Exp, n.Health, n.Hunger}).ToListAsync();
-                if(data == null) { return NotFound(re); }
-                    re.message = "Lấy dữ liệu thành công";
-                    re.success = true;
-                    re.data = data;
+                var data = await _minecraftContext.Plays.Where(n => n.MId == modename.MId).Select(n => new { n.PId, n.UId, n.MId, n.WorldName, n.Time, n.Exp, n.Health, n.Hunger }).ToListAsync();
+                if (data == null) { return NotFound(re); }
+                re.message = "Lấy dữ liệu thành công";
+                re.success = true;
+                re.data = data;
 
-                    return Ok(re);    //Code 400
+                return Ok(re);    //Code 400
             }
-                catch (Exception ex)
-                {
-                    re.message = "Lấy dữ liệu không thành công";
-                    re.success = false;
-                    re.data = ex.Message;
+            catch (Exception ex)
+            {
+                re.message = "Lấy dữ liệu không thành công";
+                re.success = false;
+                re.data = ex.Message;
 
-                    return BadRequest(re);
-                }
+                return BadRequest(re);
             }
+        }
 
-        [HttpGet("Item.exp")]        //3. Lấy tất cả các vũ khí có giá trị trên 100 điểm kinh nghiệm
-        public async Task<IActionResult> GetWeapsons()
+        [HttpGet("Item.exp > 100")]        //3. Lấy tất cả các vũ khí có giá trị trên 100 điểm kinh nghiệm
+        public async Task<IActionResult> GetWeapsons(int Price)
         {
             try
             {
-                var wp = await _minecraftContext.Items.Where(k => k.IKind == 1 && k.IPrice > 100).ToListAsync();
+                var wp = await _minecraftContext.Items.Where(k => k.IKind == 1 && k.IPrice > Price).ToListAsync();
 
                 re.message = "Lấy dữ liệu thành công";
                 re.success = true;
@@ -256,7 +317,7 @@ namespace BackEnd.Controllers
             }
         }
 
-        [HttpGet("Item.Player")]        //4. Lấy thông tin các item mà người chơi có thể mua với số điểm kinh nghiệm tích lũy hiện tại của họ. 
+        [HttpGet("Item.Player ")]        //4. Lấy thông tin các item mà người chơi có thể mua với số điểm kinh nghiệm tích lũy hiện tại của họ. 
         public async Task<IActionResult> GetItem(int Playerid)
         {
             try
@@ -285,7 +346,7 @@ namespace BackEnd.Controllers
             }
         }
 
-        [HttpGet("Item.name")]        //5. Lấy thông tin các item có tên chứa từ 'kim cương' và có giá trị dưới 500 điểm kinh nghiệm 
+        [HttpGet("Item.name Kimcuong")]        //5. Lấy thông tin các item có tên chứa từ 'kim cương' và có giá trị dưới 500 điểm kinh nghiệm 
         public async Task<IActionResult> GetItemKc()
         {
             try
@@ -305,14 +366,14 @@ namespace BackEnd.Controllers
             }
         }
 
-        [HttpGet("Trans.Play")]        //6. Lấy thông tin tất cả các giao dịch mua item và phương tiện của một người chơi cụ thể,
-                                        //  sắp xếp theo thứ tự thời gian (thông tin người chơi cần lấy giao dịch sẽ cho người dùng truyền lên API) 
+        [HttpGet("Trans.Play OrderBy")]        //6. Lấy thông tin tất cả các giao dịch mua item và phương tiện của một người chơi cụ thể,
+                                       //  sắp xếp theo thứ tự thời gian (thông tin người chơi cần lấy giao dịch sẽ cho người dùng truyền lên API) 
         public async Task<IActionResult> GetTransa(int Playerid)
         {
             try
             {
-                var data = await _minecraftContext.Ptransactions.Where(t => t.PId == Playerid).ToListAsync();
-                if(data == null) { return NotFound(re); }
+                var data = await _minecraftContext.Ptransactions.Where(t => t.PId == Playerid).OrderBy(t => t.Time).ToListAsync();
+                if (data == null) { return NotFound(re); }
                 re.message = "Lấy dữ liệu thành công";
                 re.success = true;
                 re.data = data;
@@ -328,7 +389,7 @@ namespace BackEnd.Controllers
         }
 
         [HttpPost("Add item")]        //7. Thêm thông tin của một item mới
-        public async Task<IActionResult> AddItem(string Name ,string? Img, int? Price, int? Kind)
+        public async Task<IActionResult> AddItem(string Name, string? Img, int? Price, int? Kind)
         {
             try
             {
@@ -361,7 +422,7 @@ namespace BackEnd.Controllers
             try
             {
                 var data = await _minecraftContext.Accounts.FirstOrDefaultAsync(a => a.UId == UId);
-                if(data == null)
+                if (data == null)
                 {
                     re.message = "Khong thay Player id " + UId;
                     re.success = false;
@@ -384,12 +445,12 @@ namespace BackEnd.Controllers
             }
         }
 
-        [HttpGet("Item.Trans")]        //9. Lấy danh sách các item được mua nhiều nhất 
+        [HttpGet("Item.Trans First")]        //9. Lấy danh sách các item được mua nhiều nhất 
         public async Task<IActionResult> GetItemtMost()
         {
             try
             {
-                var key = await _minecraftContext.Ptransactions.Where(s => s.Status == true).GroupBy(t => t.IId).Select(t=> new { iid=t.Key , quan = t.Count()}).OrderByDescending(i => i.quan).FirstOrDefaultAsync();
+                var key = await _minecraftContext.Ptransactions.Where(s => s.Status == true).GroupBy(t => t.IId).Select(t => new { iid = t.Key, quan = t.Count() }).OrderByDescending(i => i.quan).FirstOrDefaultAsync();
                 if (key == null)
                 {
                     re.message = "No data";
@@ -411,14 +472,14 @@ namespace BackEnd.Controllers
             }
         }
 
-        [HttpGet("Play.Trans")]        //10. Lấy danh sách tất cả người chơi và số lần họ đã mua hàng
+        [HttpGet("Play.Trans Solanmua")]        //10. Lấy danh sách tất cả người chơi và số lần họ đã mua hàng
         public async Task<IActionResult> GetPlayer()
         {
             try
             {
                 var data = await _minecraftContext.Ptransactions.Where(s => s.Status == true).GroupBy(p => p.PId).Select(n => new { pid = n.Key, solanmuahang = n.Count() }).
-                    Join(_minecraftContext.Plays, s => s.pid, p => p.PId, (s, p) => new { p, s.solanmuahang}).ToListAsync();
-                if(data == null)
+                    Join(_minecraftContext.Plays, s => s.pid, p => p.PId, (s, p) => new { p, s.solanmuahang }).ToListAsync();
+                if (data == null)
                 {
                     re.message = "Lấy dữ liệu không thành công";
                     re.success = false;
@@ -438,5 +499,7 @@ namespace BackEnd.Controllers
                 return BadRequest(re);
             }
         }
+
+        
     }
 }

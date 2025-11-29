@@ -235,3 +235,4 @@ E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\obj\De
 E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\obj\Debug\net9.0\BackEnd.pdb
 E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\obj\Debug\net9.0\BackEnd.genruntimeconfig.cache
 E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\obj\Debug\net9.0\ref\BackEnd.dll
+E:\FPT Polytechnic\GAM106 - Lập trình Game Back-End\Be\BackEnd\BackEnd\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
